@@ -1,4 +1,4 @@
 package Nobilis.Training.DataStructures;
 
-public class MyList {
+public class MyHashmap {
 }
