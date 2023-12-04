@@ -166,7 +166,7 @@ public class MyArrayList<T> extends AbstractList<T> implements List<T> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        return batchRemove(c, true, 0, size);
     }
 
     boolean batchRemove(Collection<?> c, boolean complement,
@@ -175,19 +175,20 @@ public class MyArrayList<T> extends AbstractList<T> implements List<T> {
         int i = from;
         int startIndex = from;
         int endIndex = end;
-        for(i = from; i < end; i++){
+        for(i = from;; i++){
+            if(i == end){
+                return false;
+            }
             if(c.contains(innerArray[i]) != complement){
-                startIndex = i;
                 break;
             }
         }
-        if(i == end){
-            return false;
-        }
+
+        startIndex = i;
+
         for (i++; i < end; i++){
             if(c.contains(innerArray[i]) == complement){
-                endIndex = i;
-                break;
+                innerArray[startIndex++] = innerArray[i];
             }
         }
 
@@ -211,6 +212,14 @@ public class MyArrayList<T> extends AbstractList<T> implements List<T> {
     public T get(int index) {
         Objects.checkIndex(index, size);
         return (T)innerArray[index];
+    }
+
+    @Override
+    public T set(int index, T element) {
+        Objects.checkIndex(index, size);
+        T oldValue = (T)innerArray[index];
+        innerArray[index] = element;
+        return oldValue;
     }
 
     @Override
@@ -290,7 +299,7 @@ public class MyArrayList<T> extends AbstractList<T> implements List<T> {
 
     private class MyIterator implements Iterator<T>{
 
-        int cursor;
+        int cursor = -1;
 
         @Override
         public boolean hasNext() {
@@ -300,8 +309,9 @@ public class MyArrayList<T> extends AbstractList<T> implements List<T> {
         @Override
         public T next() {
 
-            if (cursor >= size)
+            if (cursor >= size){
                 throw new NoSuchElementException();
+            }
 
             cursor++;
 
