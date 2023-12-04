@@ -3,6 +3,7 @@ package Nobilis.Training;
 import Nobilis.Training.DataStructures.MyArrayList;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
@@ -12,5 +13,7 @@ public class Main {
         jopaMy.add(42);
         System.out.println(jopaMy.size());
         ArrayList<Integer> list = new ArrayList<Integer>();
+
+        HashMap<Integer,String> map = new HashMap<>();
     }
 }
