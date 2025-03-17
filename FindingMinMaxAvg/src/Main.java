@@ -14,15 +14,15 @@ public class Main {
         double max = randomArray[0];
         double avg = 0;
 
-        for (int i = 0; i < randomArray.length; i++) {
-            if(min > randomArray[i]){
-                min = randomArray[i];
+        for (double v : randomArray) {
+            if (min > v) {
+                min = v;
             }
-            if(max < randomArray[i]){
-                max = randomArray[i];
+            if (max < v) {
+                max = v;
             }
 
-            avg += randomArray[i];
+            avg += v;
         }
 
         avg = avg/ randomArray.length;
